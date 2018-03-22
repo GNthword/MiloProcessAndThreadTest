@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_syn_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="synchronized way"
+            />
+
+        <Button
+            android:id="@+id/btn_volatile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="volatile way"
+            />
+
+        <Button
+            android:id="@+id/btn_lock_condition_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lock Condition"
+            />
+
+        <Button
+            android:id="@+id/btn_BlockingQueue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BlockingQueue way"
+            />
+
+        <Button
+            android:id="@+id/btn_Mutex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BlockingQueue way"
+            />
+
+        <Button
+            android:id="@+id/btn_Semaphore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semaphore way"
+            />
+
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="waiting"
+            />
+
+
+    </LinearLayout>
+</ScrollView>
