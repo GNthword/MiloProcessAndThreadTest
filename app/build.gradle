@@ -1,7 +1,12 @@
 apply plugin: 'com.android.application'
 
+File signature = file("signature.properties");
+def Properties signatureProperties = new Properties();
+signatureProperties.load(new FileInputStream(signature));
+
 android {
     compileSdkVersion 26
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.miloway.miloprocessandthreadtest"
         minSdkVersion 19
@@ -13,11 +18,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    signingConfigs {
+        debug {//调试版本的签名配置
+            storeFile file(signatureProperties['DEBUG_KEYSTORE'])
+            keyAlias signatureProperties['DEBUG_ALIAS']
+            storePassword signatureProperties['DEBUG_KEYSTORE_PWD']
+            keyPassword signatureProperties['DEBUG_ALIAS_PWD']
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
