@@ -54,6 +54,13 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
+        <provider
+            android:authorities="com.miloway.contentprovider"
+            android:name=".process.MyContentProvider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            />
+
     </application>
 
 </manifest>

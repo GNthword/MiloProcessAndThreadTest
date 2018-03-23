@@ -21,6 +21,13 @@
             android:text="file observer"
             />
 
+        <Button
+            android:id="@+id/btn_content_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="content provider"
+            />
+
 
         <TextView
             android:id="@+id/tv_show"

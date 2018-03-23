@@ -1,9 +1,9 @@
 package com.miloway.miloprocessandthreadtest;
 
-import android.*;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.miloway.miloprocessandthreadtest.process.MyBinder;
+import com.miloway.miloprocessandthreadtest.process.MyContentProvider;
 import com.miloway.miloprocessandthreadtest.process.MyFileObserver;
 import com.miloway.miloprocessandthreadtest.process.MyService;
 
@@ -26,12 +27,14 @@ import java.io.IOException;
  * Created by miloway on 2018/3/22.
  */
 
-public class ProcessShareActivity extends Activity implements UpdateTextView{
+public class ProcessShareActivity extends Activity implements UpdateTextView {
     private Button btnService;
     private Button btnFile;
     private TextView tvShow;
     private ServiceConnection connection;
     private MyFileObserver observer;
+    private Button btnContentProvider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +52,19 @@ public class ProcessShareActivity extends Activity implements UpdateTextView{
                 fileObserver();
             }
         });
+        btnContentProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contentProvider();
+            }
+        });
     }
 
     private void initView() {
         btnService = (Button) findViewById(R.id.btn_service);
         btnFile = (Button) findViewById(R.id.btn_file);
         tvShow = (TextView) findViewById(R.id.tv_show);
+        btnContentProvider = (Button) findViewById(R.id.btn_content_provider);
     }
 
 
@@ -78,15 +88,15 @@ public class ProcessShareActivity extends Activity implements UpdateTextView{
 
     private void fileObserver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             requestPermissions(new String[]{
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, 1);
             return;
         }
 
-        String path = Environment.getExternalStorageDirectory() + "/"+ "a.txt";
+        String path = Environment.getExternalStorageDirectory() + "/" + "a.txt";
         File file = new File(path);
         if (!file.exists()) {
             try {
@@ -100,6 +110,25 @@ public class ProcessShareActivity extends Activity implements UpdateTextView{
         observer.setListener(this);
         observer.startWatching();
     }
+
+    private void contentProvider() {
+        ContentValues values = new ContentValues();
+        values.put("txt", "insert");
+        getContentResolver().insert(MyContentProvider.uri,values);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -127,7 +156,7 @@ public class ProcessShareActivity extends Activity implements UpdateTextView{
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     tvShow.setText("获取写权限成功");
                     fileObserver();
-                }else {
+                } else {
                     tvShow.setText("获取写权限失败");
                 }
             }
